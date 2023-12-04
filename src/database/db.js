@@ -1,8 +1,5 @@
 import mongoose from "mongoose";
 
-import "dotenv/config";
-
-
 const connectDatabase = async () => {
   console.log("Wait connecting to the database");
 

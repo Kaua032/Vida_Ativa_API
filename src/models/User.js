@@ -10,6 +10,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  password: {
+    type: String,
+    require: true,
+  },
   add_student: {
     type: Boolean,
     default: false,
@@ -20,12 +24,8 @@ const UserSchema = new mongoose.Schema({
   },
   src: {
     type: String,
-    required: true,
-  },
-  file_name_image_perfil: {
-    type: String,
-    require: true,
-  },
+    required: false,
+  }
 });
 
 UserSchema.pre("save", async function (next) {
