@@ -25,6 +25,10 @@ const UserSchema = new mongoose.Schema({
   src: {
     type: String,
     required: false,
+  },
+  file_perfil_name: {
+    type: String,
+    require: true
   }
 });
 
