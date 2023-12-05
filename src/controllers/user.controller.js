@@ -13,28 +13,23 @@ export const CreateUserController = async (req, res) => {
     } else {
       src = file.path;
     }
-    const ifUserExixts = User.findOne({ cpf });
 
-    if (ifUserExixts) {
-      res.send("Usuário existente");
-    } else {
-      const user = new User({
-        name,
-        cpf,
-        password,
-        file_perfil_name,
-        src,
-      });
+    const user = new User({
+      name,
+      cpf,
+      password,
+      file_perfil_name,
+      src,
+    });
 
-      await user.save();
+    await user.save();
 
-      const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {
-        expiresIn: 86400,
-      });
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {expiresIn: 86400});
 
-      res.send({ user, token });
-    }
+    res.send({user, token})
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    return res
+      .status(500)
+      .send({ message: error.message });
   }
 };
