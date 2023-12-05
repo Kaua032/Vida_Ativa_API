@@ -28,11 +28,14 @@ const UserSchema = new mongoose.Schema({
   },
   file_perfil_name: {
     type: String,
-    require: true
-  }
+    require: true,
+  },
 });
 
 UserSchema.pre("save", async function (next) {
+  if (!this.password) {
+    throw new Error("Password not provided");
+  }
   this.password = await bcrypt.hash(this.password, 10);
   next();
 });
