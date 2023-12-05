@@ -1,13 +1,15 @@
+import "dotenv/config";
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
-const CreateUserController = async (req, res) => {
+export const CreateUserController = async (req, res) => {
   const { name, cpf, password, file_perfil_name } = req.body;
   const file = req.file;
 
   try {
     let src;
     if (!file) {
-      src = "uploads\\nophoto.png";
+      src = "src\\uploads\\nophoto.png";
     } else {
       src = file.path;
     }
@@ -22,10 +24,12 @@ const CreateUserController = async (req, res) => {
 
     await user.save();
 
-    return user;
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {expiresIn: 86400});
+
+    res.send({user, token})
   } catch (error) {
     return res
       .status(500)
-      .send({ message: error.message, part: "CreateUserController" });
+      .send({ message: error.message });
   }
 };
