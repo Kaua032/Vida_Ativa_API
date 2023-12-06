@@ -53,3 +53,26 @@ export const ChangeUserPasswordController = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const findAllUsersController = async (req, res) => {
+  let users = [];
+  try {
+    const usersFindAll = await User.find();
+
+    users.push(
+      usersFindAll.map((user) => {
+        const userActual = {
+          name: user.name,
+          cpf: user.cpf,
+          add_student: user.add_student,
+          add_teacher: user.add_teacher,
+        };
+        return userActual;
+      })
+    );
+
+    return res.status(200).json({ users });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
