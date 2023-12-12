@@ -18,3 +18,13 @@ export const registerStudentController = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const allStudentsController = async (req, res) => {
+  try {
+    const users = await Student.find();
+
+    return res.status(200).json({ users });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};

@@ -1,9 +1,12 @@
 import { Router } from "express";
-import { registerStudentController } from "../controllers/student.controller.js";
+import {
+  allStudentsController,
+  registerStudentController,
+} from "../controllers/student.controller.js";
 
 const studentRouter = Router();
 
 studentRouter.post("/register", registerStudentController);
-studentRouter.get("/all");
+studentRouter.get("/all", allStudentsController);
 
 export default studentRouter;
