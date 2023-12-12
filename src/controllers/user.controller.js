@@ -4,23 +4,17 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 export const CreateUserController = async (req, res) => {
-  const { name, cpf, password, file_perfil_name } = req.body;
-  const file = req.file;
+  const { name, cpf, password } = req.body;
 
   try {
-    let src;
-    if (!file) {
-      src = "src\\uploads\\nophoto.png";
-    } else {
-      src = file.path;
+    if (!name || !cpf || !password) {
+      res.send("Preencha todos os campos");
     }
 
     const user = new User({
       name,
       cpf,
       password,
-      file_perfil_name,
-      src,
     });
 
     await user.save();
@@ -42,11 +36,11 @@ export const ChangeUserPasswordController = async (req, res) => {
   try {
     const user = await User.findById(userId);
 
-    if (!bcrypt.compare(current_password, user.password)) {
+    if (!bcrypt.compareSync(current_password, user.password)) {
       res.status(403).send({ message: "Senha atual incorreta." });
     }
 
-    user.password = await bcrypt.hash(new_password, 10);
+    user.password = new_password;
     await user.save();
     return res.status(200).send("Senha atualizada com sucesso.");
   } catch (error) {

@@ -19,7 +19,7 @@ export const loginController = async (req, res) => {
       return res.status(404).send({ message: "User or Password not found" });
     }
 
-    const token = await jwt.sign({ id: user._id }, process.env.SECRET_JWT, {
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {
       expiresIn: 86400,
     });
 

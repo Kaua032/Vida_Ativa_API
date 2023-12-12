@@ -4,7 +4,6 @@ import {
   CreateUserController,
   findAllUsersController,
 } from "../controllers/user.controller.js";
-import upload from "../config/multer.js";
 import {
   authMiddleware,
   checkUserExists,
@@ -12,13 +11,8 @@ import {
 
 const userRouter = Router();
 
-userRouter.post(
-  "/register",
-  checkUserExists,
-  upload.single("file"),
-  CreateUserController
-);
+userRouter.post("/register", checkUserExists, CreateUserController);
 userRouter.put("/changepassword", authMiddleware, ChangeUserPasswordController);
-userRouter.get("/all", findAllUsersController);
+userRouter.get("/all", authMiddleware, findAllUsersController);
 
 export default userRouter;
