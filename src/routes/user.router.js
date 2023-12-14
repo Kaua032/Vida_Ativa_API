@@ -3,6 +3,7 @@ import {
   ChangeUserPasswordController,
   CreateUserController,
   findAllUsersController,
+  updateAllUsersController,
 } from "../controllers/user.controller.js";
 import {
   authMiddleware,
@@ -21,5 +22,11 @@ userRouter.post(
 );
 userRouter.put("/changepassword", authMiddleware, ChangeUserPasswordController);
 userRouter.get("/all", authMiddleware, findAllUsersController);
+userRouter.put(
+  "/update",
+  authMiddleware,
+  verifyIfCanAddTeacher,
+  updateAllUsersController
+);
 
 export default userRouter;

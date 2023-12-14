@@ -70,3 +70,17 @@ export const findAllUsersController = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const updateAllUsersController = async (req, res) => {
+  const { cpf, add_student, add_teacher } = req.body;
+
+  try {
+    await User.findOneAndUpdate({ cpf }, { add_student, add_teacher });
+
+    return res
+      .status(200)
+      .send({ message: "Autorizações atualizadas com sucesso." });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
