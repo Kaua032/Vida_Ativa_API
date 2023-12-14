@@ -1,8 +1,13 @@
 import Router from "express";
-import { findAllFrequencesByDateController } from "../controllers/frequence.controller.js";
+import {
+  addFrequencesController,
+  findAllFrequencesByDateController,
+} from "../controllers/frequence.controller.js";
+import { authMiddleware } from "../middleware/auth.middlware.js";
 
 const frequenceRouter = Router();
 
 frequenceRouter.get("/consult", findAllFrequencesByDateController);
+frequenceRouter.post("/add", authMiddleware, addFrequencesController);
 
 export default frequenceRouter;

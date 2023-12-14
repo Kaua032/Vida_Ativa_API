@@ -7,7 +7,7 @@ export const registerStudentController = async (req, res) => {
     if (!name || !cpf || !registration) {
       return res.status(400).send({ message: "Preencha todos os campos." });
     }
-    if (Student.findOne({ cpf })) {
+    if (await Student.findOne({ cpf })) {
       return res.status(409).json({ message: "CPF já existente" });
     }
 
