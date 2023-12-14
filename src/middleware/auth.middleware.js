@@ -54,14 +54,10 @@ export const verifyIfCanAddTeacher = async (req, res, next) => {
 
   const teacher = await User.find(userId);
 
-  console.log(teacher);
-
   if (teacher.add_teacher === false) {
-    return res
-      .status(403)
-      .send({
-        message: "Você não tem autorização para adicionar novos professores.",
-      });
+    return res.status(403).send({
+      message: "Você não tem autorização para adicionar novos professores.",
+    });
   }
   return next();
 };
@@ -72,11 +68,9 @@ export const verifyIfCanAddStudent = async (req, res, next) => {
   const teacher = await User.find(userId);
 
   if (teacher.add_student === false) {
-    return res
-      .status(403)
-      .send({
-        message: "Você não tem autorização para adicionar novos alunos.",
-      });
+    return res.status(403).send({
+      message: "Você não tem autorização para adicionar novos alunos.",
+    });
   }
   return next();
 };
