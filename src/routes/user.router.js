@@ -7,11 +7,18 @@ import {
 import {
   authMiddleware,
   checkUserExists,
-} from "../middleware/auth.middlware.js";
+  verifyIfCanAddTeacher,
+} from "../middleware/auth.middleware.js";
 
 const userRouter = Router();
 
-userRouter.post("/register", checkUserExists, CreateUserController);
+userRouter.post(
+  "/register",
+  authMiddleware,
+  verifyIfCanAddTeacher,
+  checkUserExists,
+  CreateUserController
+);
 userRouter.put("/changepassword", authMiddleware, ChangeUserPasswordController);
 userRouter.get("/all", authMiddleware, findAllUsersController);
 

@@ -48,3 +48,25 @@ export const authMiddleware = async (req, res, next) => {
     return next();
   });
 };
+
+export const verifyIfCanAddTeacher = async (req, res, next) => {
+  const userId = req.userId;
+
+  const teacher = User.find(userId)
+
+  if(!teacher.add_teacher){
+    return res.status(403).send({message: "Você não tem autorização para adicionar novos professores."})
+  }
+  return next()
+}
+
+export const verifyIfCanAddStudent = async (req, res, next) => {
+  const userId = req.userId;
+
+  const teacher = User.find(userId)
+
+  if(!teacher.add_student){
+    return res.status(403).send({message: "Você não tem autorização para adicionar novos alunos."})
+  }
+  return next()
+}

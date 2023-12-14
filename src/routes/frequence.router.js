@@ -3,7 +3,7 @@ import {
   addFrequencesController,
   findAllFrequencesByDateController,
 } from "../controllers/frequence.controller.js";
-import { authMiddleware } from "../middleware/auth.middlware.js";
+import { authMiddleware } from "../middleware/auth.middleware.js";
 
 const frequenceRouter = Router();
 
