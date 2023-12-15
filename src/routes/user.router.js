@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   ChangeUserPasswordController,
   CreateUserController,
+  FindUserByIdController,
   findAllUsersController,
   updateAllUsersController,
 } from "../controllers/user.controller.js";
@@ -28,5 +29,6 @@ userRouter.put(
   verifyIfCanAddTeacher,
   updateAllUsersController
 );
+userRouter.get("/finduser", authMiddleware, FindUserByIdController);
 
 export default userRouter;

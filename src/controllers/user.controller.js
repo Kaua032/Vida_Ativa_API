@@ -84,3 +84,21 @@ export const updateAllUsersController = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const FindUserByIdController = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const userFindid = await User.findById(userId);
+
+    const user = {
+      name: userFindid.name,
+      add_student: userFindid.add_student,
+      add_teacher: userFindid.add_teacher,
+    };
+
+    return res.status(200).send({ user });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
