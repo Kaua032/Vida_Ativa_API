@@ -10,13 +10,13 @@ export const loginController = async (req, res) => {
     const user = await User.findOne({ cpf });
 
     if (!user) {
-      return res.status(404).send({ message: "User or Password not found" });
+      return res.status(404).send({ message: "CPF ou Senha incorretos." });
     }
 
     const ifPasswordIsValid = await bcrypt.compare(password, user.password);
 
     if (!ifPasswordIsValid) {
-      return res.status(404).send({ message: "User or Password not found" });
+      return res.status(404).send({ message: "CPF ou Senha incorretos." });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT, {
