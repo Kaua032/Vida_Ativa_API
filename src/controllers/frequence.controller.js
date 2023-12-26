@@ -77,3 +77,37 @@ export const allFrequencesOnTheMonth = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
+
+export const allFrequencesOnTheWeek = async (req, res) => {
+  try {
+    const startOfWeek = moment().startOf('week');
+    const frequencesByDay = {};
+
+    for (let i = 0; i < 7; i++) {
+      const dayStart = startOfWeek.clone().add(i, 'days').startOf('day').toDate();
+      const dayEnd = startOfWeek.clone().add(i, 'days').endOf('day').toDate();
+
+      const frequencesTrue = await Frequence.countDocuments({
+        class_date: {
+          $gte: dayStart,
+          $lte: dayEnd,
+        },
+        frequence: true,
+      });
+
+      const frequencesFalse = await Frequence.countDocuments({
+        class_date: {
+          $gte: dayStart,
+          $lte: dayEnd,
+        },
+        frequence: false,
+      });
+
+      frequencesByDay[startOfWeek.clone().add(i, 'days').format('dddd')] = { frequencesTrue, frequencesFalse };
+    }
+
+    res.status(200).send(frequencesByDay);
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
