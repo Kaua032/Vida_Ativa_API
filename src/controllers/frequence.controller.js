@@ -1,5 +1,6 @@
 import Frequence from "../models/Frequence.js";
 import User from "../models/User.js";
+import moment from "moment";
 
 export const findAllFrequencesByDateController = async (req, res) => {
   const { class_date } = req.body;
@@ -45,6 +46,33 @@ export const addFrequencesController = async (req, res) => {
     );
 
     return res.status(200).send({ allFrequences });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+export const allFrequencesOnTheMonth = async (req, res) => {
+  try {
+    const startOfMonth = moment().startOf("month").toDate();
+    const endOfMonth = moment().endOf("month").toDate();
+
+    const frequencesTrue = await Frequence.countDocuments({
+      class_date: {
+        $gte: startOfMonth,
+        $lte: endOfMonth,
+      },
+      frequence: true,
+    });
+
+    const frequencesFalse = await Frequence.countDocuments({
+      class_date: {
+        $gte: startOfMonth,
+        $lte: endOfMonth,
+      },
+      frequence: false,
+    });
+
+    res.status(200).send({ frequencesTrue, frequencesFalse });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
