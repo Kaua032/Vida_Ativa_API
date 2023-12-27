@@ -80,12 +80,16 @@ export const allFrequencesOnTheMonth = async (req, res) => {
 
 export const allFrequencesOnTheWeek = async (req, res) => {
   try {
-    const startOfWeek = moment().startOf('week');
+    const startOfWeek = moment().startOf("week").utc();
     const frequencesByDay = {};
 
     for (let i = 0; i < 7; i++) {
-      const dayStart = startOfWeek.clone().add(i, 'days').startOf('day').toDate();
-      const dayEnd = startOfWeek.clone().add(i, 'days').endOf('day').toDate();
+      const dayStart = startOfWeek
+        .clone()
+        .add(i, "days")
+        .startOf("day")
+        .toDate();
+      const dayEnd = startOfWeek.clone().add(i, "days").endOf("day").toDate();
 
       const frequencesTrue = await Frequence.countDocuments({
         class_date: {
@@ -103,7 +107,10 @@ export const allFrequencesOnTheWeek = async (req, res) => {
         frequence: false,
       });
 
-      frequencesByDay[startOfWeek.clone().add(i, 'days').format('dddd')] = { frequencesTrue, frequencesFalse };
+      frequencesByDay[startOfWeek.clone().add(i, "days").format("dddd")] = {
+        frequencesTrue,
+        frequencesFalse,
+      };
     }
 
     res.status(200).send(frequencesByDay);
