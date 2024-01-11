@@ -68,10 +68,14 @@ export const findAllUsersController = async (req, res) => {
 };
 
 export const updateAllUsersController = async (req, res) => {
-  const { cpf, add_student, add_teacher } = req.body;
+  const teachers = req.body
 
   try {
-    await User.findOneAndUpdate({ cpf }, { add_student, add_teacher });
+    for(let i = 0; i < teachers.length; i++){
+      const { cpf, add_student, add_teacher } = teachers[i];
+
+      await User.findOneAndUpdate({ cpf }, { add_student, add_teacher})
+    }
 
     return res
       .status(200)
