@@ -1,20 +1,40 @@
 import Frequence from "../models/Frequence.js";
 import User from "../models/User.js";
+import Student from "../models/Student.js";
 import moment from "moment";
 
 export const findAllFrequencesByDateController = async (req, res) => {
-  const { class_date } = req.body;
+  const { class_date } = req.query;
+  let infoFrequence = [];
 
   try {
     const frequences = await Frequence.find({ class_date });
 
     if (frequences.length === 0) {
       return res
-        .status(400)
+        .status(200)
         .send({ message: "Não existe nenhuma frequência nessa data." });
+    } else {
+      await Promise.all(
+        frequences.map(async (frequence) => {
+          const currentStudent = await Student.findOne({
+            cpf: frequence.cpf_student,
+          });
+
+          const currentFrequence = {
+            name: currentStudent.name,
+            cpf: currentStudent.cpf,
+            registration: currentStudent.registration,
+            frequence: frequence.frequence,
+            class_date: frequence.class_date,
+          };
+
+          infoFrequence.push(currentFrequence);
+        })
+      );
     }
 
-    return res.status(200).json({ frequences });
+    return res.status(200).json({ infoFrequence });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
