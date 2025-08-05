@@ -1,8 +1,3 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/Kaua032/Portfolio/main/portfolio/public/VidaAtiva.png" style="" />
-</div>
-
-
 # 💪 Vida Ativa API
 
 API RESTful desenvolvida para registrar e monitorar a frequência de alunos em uma associação. Professores autenticados podem gerenciar o cadastro de alunos, registrar presenças e consultar faltas por dia, semana ou datas específicas.
