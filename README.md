@@ -53,3 +53,14 @@ POST    /frequence/add
 GET     /frequence/consult
 GET     /frequence/allmonth
 GET     /frequence/allweek
+```
+## 📦 Como rodar o projeto localmente
+
+> Pré-requisitos:
+> - Node.js instalado
+
+```bash
+git clone https://github.com/Kaua032/Vida_Ativa_Frontend.git
+cd Vida_Ativa_Frontend/Vida_Ativa/
+npm install
+npm run dev
