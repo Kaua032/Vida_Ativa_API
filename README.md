@@ -58,9 +58,10 @@ GET     /frequence/allweek
 
 > Pré-requisitos:
 > - Node.js instalado
+> - No .env deve ser fornecido uma Porta, Mongo_uri, secret_jwt
 
 ```bash
-git clone https://github.com/Kaua032/Vida_Ativa_Frontend.git
-cd Vida_Ativa_Frontend/Vida_Ativa/
+git clone https://github.com/Kaua032/Vida_Ativa_API.git
+cd Vida_Ativa_API
 npm install
 npm run dev
